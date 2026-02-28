@@ -6,10 +6,10 @@ use Livewire\Component;
 
 class TemperatureConverter extends Component
 {
-    public float $value = 0;
+    public string $value = '0';
     public string $fromUnit = 'c';
     public string $toUnit = 'f';
-    public float $result = 0;
+    public string $result = '0';
 
     public function mount(): void
     {
@@ -23,11 +23,29 @@ class TemperatureConverter extends Component
 
     public function convert(): void
     {
+        // Handle empty or invalid input
+        if ($this->value === '' || $this->value === null) {
+            $this->value = '0';
+        }
+
+        // Remove any non-numeric characters except decimal point and minus sign
+        $this->value = preg_replace('/[^0-9.-]/', '', $this->value);
+        
+        // Ensure it's a valid number
+        if (!is_numeric($this->value)) {
+            $this->value = '0';
+        }
+
+        $numericValue = floatval($this->value);
+        
         // Convert to Celsius first
-        $celsius = $this->convertToCelsius($this->value, $this->fromUnit);
+        $celsius = $this->convertToCelsius($numericValue, $this->fromUnit);
         
         // Convert from Celsius to target unit
-        $this->result = $this->convertFromCelsius($celsius, $this->toUnit);
+        $converted = $this->convertFromCelsius($celsius, $this->toUnit);
+        
+        // Format the result
+        $this->result = $this->formatResult($converted);
     }
 
     private function convertToCelsius(float $value, string $unit): float
@@ -48,6 +66,22 @@ class TemperatureConverter extends Component
             'k' => $celsius + 273.15,
             default => $celsius,
         };
+    }
+
+    private function formatResult(float $value): string
+    {
+        // Handle very small numbers
+        if (abs($value) < 0.000001 && $value != 0) {
+            return number_format($value, 10, '.', '');
+        }
+        
+        // Handle integers
+        if (floor($value) == $value) {
+            return (string)floor($value);
+        }
+        
+        // Format to 4 decimal places, removing trailing zeros
+        return rtrim(rtrim(number_format($value, 4, '.', ''), '0'), '.');
     }
 
     public function swapUnits(): void

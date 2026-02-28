@@ -21,6 +21,7 @@ class ScientificCalculator extends Component
             $this->currentInput = $number;
             $this->waitingForSecond = false;
         } else {
+            // If current input is just "0", replace it with the number
             if ($this->currentInput === '0') {
                 $this->currentInput = $number;
             } else {
@@ -32,10 +33,13 @@ class ScientificCalculator extends Component
 
     public function appendDecimal(): void
     {
-        if (!str_contains($this->currentInput, '.')) {
+        if ($this->waitingForSecond) {
+            $this->currentInput = '0.';
+            $this->waitingForSecond = false;
+        } else if (!str_contains($this->currentInput, '.')) {
             $this->currentInput .= '.';
-            $this->display = $this->currentInput;
         }
+        $this->display = $this->currentInput;
     }
 
     public function setOperator(string $op): void
