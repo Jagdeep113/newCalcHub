@@ -37,10 +37,11 @@ class LengthConverter extends Component
     public function convert(): void
     {
         // Convert to base unit (meters)
-        $meters = $this->value * $this->conversionFactors[$this->fromUnit];
+
+        $meters =!empty($this->value) ?$this->value * $this->conversionFactors[$this->fromUnit]:0;
         
         // Convert from meters to target unit
-        $this->result = $meters / $this->conversionFactors[$this->toUnit];
+        $this->result = !empty($meters) && !empty($this->conversionFactors[$this->toUnit]) ?$meters / $this->conversionFactors[$this->toUnit]:0;
     }
 
     public function swapUnits(): void
