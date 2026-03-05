@@ -44,6 +44,7 @@ class LoanCalculator extends Component
         $monthlyRate = ($this->interestRate / 100) / 12;
         
         if ($monthlyRate > 0) {
+           $this->loanAmount= !empty($this->loanAmount)? $this->loanAmount:0;
             $this->monthlyPaymentResult = $this->loanAmount * 
                 ($monthlyRate * pow(1 + $monthlyRate, $this->loanTerm)) / 
                 (pow(1 + $monthlyRate, $this->loanTerm) - 1);
