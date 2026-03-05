@@ -11,7 +11,7 @@ class WeightConverter extends Component
     public string $toUnit = 'lb';
     public float $result = 0;
 
-    // Conversion factors to kilograms
+    // Conversion factors to kilograms 
     private array $conversionFactors = [
         'kg' => 1,
         'g' => 0.001,
