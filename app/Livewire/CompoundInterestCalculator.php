@@ -18,6 +18,12 @@ class CompoundInterestCalculator extends Component
     public float $totalInterest = 0;
     public array $yearlyBreakdown = [];
 
+    public function __construct()
+    {
+       $this->principal = !empty($this->principal) ? $this->principal :1;
+       $this->monthlyContribution = !empty($this->monthlyContribution) ? $this->monthlyContribution:1;
+    }
+
     public function mount(): void
     {
         $this->calculate();
@@ -46,6 +52,7 @@ class CompoundInterestCalculator extends Component
     private function calculateOneTime(float $rate, int $periods, int $years): void
     {
         // A = P(1 + r/n)^(nt)
+        $this->principal = !empty($this->principal) ? $this->principal : 1;
         $this->futureValue = $this->principal * pow(1 + $rate / $periods, $periods * $years);
         $this->totalContributions = $this->principal;
         $this->totalInterest = $this->futureValue - $this->principal;
@@ -56,6 +63,7 @@ class CompoundInterestCalculator extends Component
         $periodicRate = $rate / $periods;
         $totalPeriods = $years * $periods;
         
+        $this->monthlyContribution = !empty($this->monthlyContribution) ? $this->monthlyContribution:1;
         // Future value of periodic payments
         // FV = P * ((1 + r)^n - 1) / r
         if ($periodicRate > 0) {
@@ -65,6 +73,7 @@ class CompoundInterestCalculator extends Component
             $fvContributions = $this->monthlyContribution * $totalPeriods;
         }
         
+        $this->principal = !empty($this->principal) ? $this->principal :1;
         // Future value of initial principal
         $fvPrincipal = $this->principal * pow(1 + $periodicRate, $totalPeriods);
         
@@ -78,7 +87,7 @@ class CompoundInterestCalculator extends Component
         $this->yearlyBreakdown = [];
         $periodicRate = $rate / $periods;
         $totalPeriods = $years * $periods;
-        
+        $this->monthlyContribution = !empty($this->monthlyContribution) ? $this->monthlyContribution:1;
         for ($year = 1; $year <= min($years, 10); $year+= max(1, floor($years/10))) {
             $periodsElapsed = $year * $periods;
             

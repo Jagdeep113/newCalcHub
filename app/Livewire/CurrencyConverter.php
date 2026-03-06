@@ -44,6 +44,7 @@ class CurrencyConverter extends Component
     public function convert(): void
     {
         // Convert via USD as base
+        $this->amount = !empty($this->amount) ? $this->amount :1;
         $amountInUSD = $this->amount / $this->rates[$this->fromCurrency];
         $this->result = $amountInUSD * $this->rates[$this->toCurrency];
     }
