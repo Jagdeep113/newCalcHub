@@ -95,7 +95,7 @@
                     @if($this->shortfall > 0)
                         <p class="small mb-0">
                             You are <strong>${{ number_format($this->shortfall, 0) }}</strong> short of your goal.
-                            @if($this->getYearsToRetirementProperty > 0)
+                            @if(isset($this->getYearsToRetirementProperty) && $this->getYearsToRetirementProperty > 0)
                                 Consider increasing your annual contribution by 
                                 <strong>${{ number_format($this->recommendedContribution, 0) }}</strong>.
                             @endif
@@ -113,7 +113,7 @@
                     <div class="col-6">
                         <div class="bg-light p-3 rounded-3 text-center">
                             <div class="small text-muted">Years to Retirement</div>
-                            <div class="h4 mb-0">{{ $this->getYearsToRetirementProperty }}</div>
+                            <div class="h4 mb-0">{{ !empty($this->getYearsToRetirementProperty) ? $this->getYearsToRetirementProperty: 0 }}</div>
                         </div>
                     </div>
                     <div class="col-6">

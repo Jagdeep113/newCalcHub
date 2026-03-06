@@ -36,16 +36,22 @@ class RetirementCalculator extends Component
 
     public function calculate(): void
     {
+        $this->retirementAge =!empty($this->retirementAge) ? $this->retirementAge:1;
+        $this->currentAge = !empty($this->currentAge) ? $this->currentAge:1;
         $yearsToRetirement = $this->retirementAge - $this->currentAge;
+        $this->lifeExpectancy= !empty($this->lifeExpectancy) ? $this->lifeExpectancy :1;
         $yearsInRetirement = $this->lifeExpectancy - $this->retirementAge;
         
-        $rate = $this->expectedReturn / 100;
-        $inflation = $this->inflationRate / 100;
+        $rate = !empty($this->expectedReturn) ? $this->expectedReturn / 100 :7;
+        $inflation = !empty($this->inflationRate) ? $this->inflationRate / 100 :1;
 
         // Calculate future value of current savings
+        $this->currentSavings = !empty($this->currentSavings) ? $this->currentSavings:1; 
         $fvCurrent = $this->currentSavings * pow(1 + $rate, $yearsToRetirement);
         
         // Calculate future value of annual contributions
+
+        $this->annualContribution = !empty($this->annualContribution) ? $this->annualContribution:1;
         if ($rate > 0) {
             $fvContributions = $this->annualContribution * 
                 ((pow(1 + $rate, $yearsToRetirement) - 1) / $rate);
@@ -54,10 +60,9 @@ class RetirementCalculator extends Component
         }
 
         $this->futureValue = $fvCurrent + $fvContributions;
-        $this->totalContributions = $this->currentSavings + 
-            ($this->annualContribution * $yearsToRetirement);
+        $this->totalContributions = $this->currentSavings + ($this->annualContribution * $yearsToRetirement);
         $this->totalGrowth = $this->futureValue - $this->totalContributions;
-
+        $this->currentIncome = !empty($this->currentIncome)? $this->currentIncome:1;
         // Calculate desired retirement income (adjusted for inflation)
         $desiredIncome = $this->currentIncome * ($this->retirementIncomePercent / 100);
         $inflatedIncome = $desiredIncome * pow(1 + $inflation, $yearsToRetirement);
@@ -103,7 +108,7 @@ class RetirementCalculator extends Component
         if ($this->getYearsToRetirementProperty <= 0) return 0;
         
         $rate = $this->expectedReturn / 100;
-        $years = $this->getYearsToRetirementProperty;
+        $years = !empty($this->getYearsToRetirementProperty) ? $this->getYearsToRetirementProperty:1;
         
         if ($rate > 0) {
             $fvFactor = (pow(1 + $rate, $years) - 1) / $rate;

@@ -30,14 +30,14 @@ class InvestmentCalculator extends Component
     {
         $rate = $this->annualReturn / 100;
         $periods = $this->years;
-        
+        $this->initialInvestment=!empty($this->initialInvestment) ? $this->initialInvestment:0;
         // Future value of initial investment
         $fvInitial = $this->initialInvestment * pow(1 + $rate, $periods);
         
         // Future value of monthly contributions
         $monthlyRate = $rate / 12;
         $months = $periods * 12;
-        
+        $this->monthlyContribution = !empty($this->monthlyContribution) ? $this->monthlyContribution:1;
         if ($monthlyRate > 0) {
             $fvContributions = $this->monthlyContribution * 
                 ((pow(1 + $monthlyRate, $months) - 1) / $monthlyRate) * 
