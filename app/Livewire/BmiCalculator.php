@@ -28,6 +28,11 @@ class BmiCalculator extends Component
 
     public function calculate(): void
     {
+         $this->height = !empty($this->height) ? $this->height : 1;
+         $this->weight = !empty($this->weight) ? $this->weight : 1;
+         $this->heightFt = !empty($this->heightFt) ? $this->heightFt : 1;
+         $this->heightIn = !empty($this->heightIn) ? $this->heightIn : 0;
+         $this->weightLbs = !empty($this->weightLbs) ? $this->weightLbs : 1;
         if ($this->unit === 'metric') {
             $heightInMeters = $this->height / 100;
             $this->bmi = $this->weight / ($heightInMeters * $heightInMeters);
