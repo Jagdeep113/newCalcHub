@@ -38,6 +38,7 @@ class BmrCalculator extends Component
         $height = $this->getHeightInCm();
         $weight = $this->getWeightInKg();
 
+        $this->age = !empty($this->age) ? $this->age:1;
         // Mifflin-St Jeor Equation
         if ($this->gender === 'male') {
             $this->bmr = (10 * $weight) + (6.25 * $height) - (5 * $this->age) + 5;
@@ -57,15 +58,18 @@ class BmrCalculator extends Component
 
     private function getHeightInCm(): float
     {
+        $this->heightCm = !empty($this->heightCm) ? $this->heightCm :1;
         if ($this->unit === 'metric') {
             return $this->heightCm;
         }
-        
+        $this->heightFt = !empty($this->heightFt) ? $this->heightFt :1;
+        $this->heightIn = !empty($this->heightIn) ? $this->heightIn :1;
         return ($this->heightFt * 30.48) + ($this->heightIn * 2.54);
     }
 
     private function getWeightInKg(): float
     {
+        $this->weightKg = !empty($this->weightKg) ? $this->weightKg :1;
         if ($this->unit === 'metric') {
             return $this->weightKg;
         }
