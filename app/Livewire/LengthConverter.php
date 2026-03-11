@@ -3,9 +3,11 @@
 namespace App\Livewire;
 
 use Livewire\Component;
+use Livewire\Attributes\Rule;
 
 class LengthConverter extends Component
 {
+    #[Rule('required|integer')]
     public float $value = 1;
     public string $fromUnit = 'm';
     public string $toUnit = 'cm';
