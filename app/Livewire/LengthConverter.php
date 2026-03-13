@@ -11,6 +11,7 @@ class LengthConverter extends Component
     public float $value = 1;
     #[Rule('required')]
     public string $fromUnit = 'm';
+    #[Rule('required')]
     public string $toUnit = 'cm';
     public float $result = 0;
 
