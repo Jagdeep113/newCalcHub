@@ -13,6 +13,7 @@ class LengthConverter extends Component
     public string $fromUnit = 'm';
     #[Rule('required')]
     public string $toUnit = 'cm';
+    #[Rule('required')]
     public float $result = 0;
 
     // Conversion factors to meters
